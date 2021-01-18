@@ -20,8 +20,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "eth-sig-util": "^2.1.0",
-    "ethereumjs-util": "^5.1.1",
-    "ethjs": "^0.3.0"
+    "ethereumjs-util": "^5.1.1"
   },
   "devDependencies": {
     "brfs": "^1.6.1",
