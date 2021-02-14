@@ -10,17 +10,21 @@ connectButton.addEventListener("click", function (event) {
 })
 
 function connect() {
-    if (typeof ethereum !== "undefined") {
-        ethereum.request({
-            method: "eth_requestAccounts"
-        }).then(result => {
-            accounts = result
-            alert("Connected!");
-        }).catch(error => {
-            alert("Error: " + error.message);
-        });
-    } else {
-        alert("ethereum not available!");
+    try {
+        if (typeof ethereum !== "undefined") {
+            ethereum.request({
+                method: "eth_requestAccounts"
+            }).then(result => {
+                accounts = result
+                alert("Connected!");
+            }).catch(error => {
+                alert("Error: " + error.message);
+            });
+        } else {
+            alert("ethereum not available!");
+        }
+    } catch(error) {
+        alert("Error: " + error.message);
     }
 }
 
