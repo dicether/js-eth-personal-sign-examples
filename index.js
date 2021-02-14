@@ -9,7 +9,16 @@ connectButton.addEventListener("click", function () {
 
 function connect() {
     if (typeof ethereum !== "undefined") {
-        ethereum.send("eth_requestAccounts").then(result => accounts = result.result).catch(console.error);
+        ethereum.request({
+            method: "eth_requestAccounts"
+        }).then(result => {
+            accounts = result
+            alert("Connected!");
+        }).catch(error => {
+            alert("Error: " + error.message);
+        });
+    } else {
+        alert("ethereum not available!");
     }
 }
 
