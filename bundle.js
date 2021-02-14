@@ -24,6 +24,7 @@ function connect() {
             alert("ethereum not available!");
         }
     } catch(error) {
+        alert(JSON.stringify(ethereum));
         alert("Error: " + error.message);
     }
 }
