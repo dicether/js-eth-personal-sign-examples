@@ -4,7 +4,8 @@ const sigUtil = require("eth-sig-util")
 
 var accounts = [undefined];
 
-connectButton.addEventListener("click", function () {
+connectButton.addEventListener("click", function (event) {
+    event.preventDefault()
     connect()
 })
 
