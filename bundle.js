@@ -343,7 +343,7 @@ signTypedDataDicetherButton.addEventListener('click', function(event) {
       "gameType": 4,
       "num": 1,
       "value": "320000000000000",
-      "balance": "0",
+      "balance": "-64000000000000000000",
       "serverHash": "0x4ed3c2d4c6acd062a3a61add7ecdb2fcfd988d944ba18e52a0b0d912d7a43cf4",
       "userHash": "0x6901562dd98a823e76140dc8728eca225174406eaa6bf0da7b0ab67f6f93de4d",
       "gameId": 2393,
