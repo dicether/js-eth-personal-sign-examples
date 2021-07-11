@@ -94,73 +94,7 @@ signTypedDataButton.addEventListener("click", function (event) {
     });
 })
 
-signTypedDataV3Button.addEventListener("click", function (event) {
-    event.preventDefault()
-
-    const msgParams = JSON.stringify({
-        types: {
-            EIP712Domain: [
-                {name: "name", type: "string"},
-                {name: "version", type: "string"},
-                {name: "chainId", type: "uint256"},
-                {name: "verifyingContract", type: "address"}
-            ],
-            Person: [
-                {name: "age", type: "uint64"},
-                {name: "name", type: "string"},
-                {name: "wallet", type: "address"}
-            ],
-            Mail: [
-                {name: "from", type: "Person"},
-                {name: "to", type: "Person"},
-                {name: "contents", type: "string"},
-                {name: "id", type: "uint256"},
-            ]
-        },
-        primaryType: "Mail",
-        domain: {
-            name: "Ether Mail",
-            version: "1",
-            chainId: 1,
-            verifyingContract: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
-        },
-        message: {
-            from: {age: 46, name: "Cow", wallet: "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"},
-            to: {age: 445711732, name: "Bob", wallet: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"},
-            contents: "Hello, Bob!",
-            id: "18446744073709551617"
-        }
-    });
-
-    const from = accounts[0];
-    if (!from) {
-        alert("You need to connect!");
-        return;
-    }
-
-    const params = [from, msgParams];
-
-    console.log("Sending eth_signTypedData_v3 request");
-    console.dir(params);
-
-    ethereum.request({
-        method: "eth_signTypedData_v3",
-        params: params,
-    }).then(result => {
-        console.log("result:", result);
-        const recovered = sigUtil.recoverTypedSignature({data: JSON.parse(msgParams), sig: result})
-        if (ethUtil.toChecksumAddress(recovered) === ethUtil.toChecksumAddress(from)) {
-            alert("Successfully ecRecovered signer as " + from)
-        } else {
-            alert("Failed to verify signer when comparing " + result + " to " + from)
-        }
-    }).catch(error => {
-        alert("Error: " + error.message);
-    });
-})
-
-signTypedDataDicetherButton.addEventListener("click", function (event) {
-    event.preventDefault()
+function ethSignTypedData(version) {
 
     const msgParams = JSON.stringify({
         "types": {
@@ -204,11 +138,11 @@ signTypedDataDicetherButton.addEventListener("click", function (event) {
 
     const params = [from, msgParams];
 
-    console.log("Sending eth_signTypedData_v3 request");
+    console.log("Sending eth_signTypedData_v" + version + " request");
     console.dir(params);
 
     ethereum.request({
-        method: "eth_signTypedData_v3",
+        method: "eth_signTypedData_v" + version,
         params: params,
     }).then(result => {
         const recovered = sigUtil.recoverTypedSignature({data: JSON.parse(msgParams), sig: result})
@@ -220,4 +154,15 @@ signTypedDataDicetherButton.addEventListener("click", function (event) {
     }).catch(error => {
         alert("Error: " + error.message);
     });
-})
+}
+
+signTypedDataV3Button.addEventListener("click", function (event) {
+    event.preventDefault();
+    ethSignTypedData(3);
+});
+
+
+signTypedDataV4Button.addEventListener("click", function (event) {
+    event.preventDefault()
+    ethSignTypedData(4);
+});
